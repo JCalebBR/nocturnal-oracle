@@ -41,7 +41,7 @@ module.exports = {
 
                         let date = luxon.DateTime.fromFormat(release.date, "d/L/yyyy");
 
-                        embed.description += `${index + 1}. ${release.type.capitalize()} | ${release.band} | ${release.title} | ${date.toFormat("cccc, LLLL dd")}\n`;
+                        embed.description += `${index + 1}. ${release.type.capitalize()} | ${release.band} | ${release.title} | ${date.toFormat("ccc, LLL dd")}\n`;
                     });
                 }
             })
