@@ -5,6 +5,7 @@ module.exports = {
     guildOnly: true,
     description: "",
     usage: "",
+    tag: "Misc",
     execute(message) {
         message.reply("pong!");
     }

@@ -1,27 +1,9 @@
 {
-    "prefix": "a!",
+    "prefix": "o!",
     "token": "",
-    "auditChannel": "",
-    "events": {
-        "MESSAGE DELETED": {
-            "color": "0xFF0000",
-            "url": "https://cdn.discordapp.com/emojis/619328827872641024.png"
-        },
-        "MESSAGE UPDATED": {
-            "color": "0xFF6600",
-            "url": "https://cdn.discordapp.com/emojis/619328813381320735.png"
-        },
-        "GUILD MEMBER ADDED": {
-            "color": "0x00FF00",
-            "url": "https://cdn.discordapp.com/emojis/435119354867220511.png"
-        },
-        "GUILD MEMBER UPDATED": {
-            "color": "0x00FF00",
-            "url": "https://cdn.discordapp.com/emojis/435119354867220511.png"
-        },
-        "GUILD MEMBER REMOVED": {
-            "color": "0xFF0000",
-            "url": "https://cdn.discordapp.com/emojis/435119363595436042.png"
+    "pngs": {
+        "oracle": {
+            "avatar": "https://cdn.discordapp.com/avatars/645253786759069697/04628709ce960cbd42eef79862b2451f.png"
         }
     }
 }
