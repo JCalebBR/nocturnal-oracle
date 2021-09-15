@@ -6,8 +6,8 @@ module.exports = {
     aliases: ["y", "year"],
     args: false,
     guildOnly: true,
-    description: "Gets all release(s) from the current or a specific month",
-    usage: "<month number or name>",
+    description: "Gets all release(s) from the current or a specific year",
+    usage: "<year>",
     admin: false,
     tag: "Releases",
     async execute(message, args, releases, Log) {
@@ -41,7 +41,7 @@ module.exports = {
 
                         let date = luxon.DateTime.fromFormat(release.date, "d/L/yyyy");
 
-                        embed.description += `${index + 1}. ${release.type.capitalize()} | ${release.band} | ${release.title} | ${date.toFormat("ccc, dd")}\n`;
+                        embed.description += `${index + 1}. ${release.type.capitalize()} | ${release.band} | ${release.title} | ${date.toFormat("cccc, LLLL dd")}\n`;
                     });
                 }
             })
