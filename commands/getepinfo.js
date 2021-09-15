@@ -15,8 +15,6 @@ module.exports = {
         const cmd = message.content.split(" ")[0];
         const data = message.content.replace(cmd, "").trim();
 
-        const now = luxon.DateTime.now();
-
         const type = "ep";
         const band = data.split("-")[0].trim();
         const title = data.split("-")[1].trim();
@@ -25,9 +23,7 @@ module.exports = {
             color: 0xff0000,
             description: "",
             title: "",
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: "" }
         };
@@ -44,13 +40,10 @@ module.exports = {
             ]
         };
 
-        await releases.findAll({
-            where: whereClause,
-        })
+        await releases.findAll({ where: whereClause, })
             .then(data => {
-                if (!data.length) {
-                    embed.description += `No releases found!`;
-                } else {
+                if (!data.length) embed.description += `No releases found!`;
+                else {
                     data.forEach(release => {
                         release = release.dataValues;
 
@@ -59,7 +52,7 @@ module.exports = {
                         embed.description += `**Release Date:** ${date.toFormat("cccc, LLLL dd, yyyy")}\n`;
                         embed.thumbnail.url += release.artwork || pngs.oracle.avatar;
                         if (release.tracklist) {
-                            embed.description += `\n**Tracklist:**\n${release.tracklist}`;
+                            embed.description += `\n**Tracklist:**\n${release.tracklist.replace("Tracklist:", "").trim()}`;
                         }
                     });
                 }

@@ -16,6 +16,7 @@ module.exports = {
         const type = "album";
         const band = data.split("-")[0].trim();
         const title = data.split("-")[1].trim();
+
         const rawDate = data.split("-")[2]
             .replace(/(\d+)(st|nd|rd|th)/g, "$1")
             .replaceAll(",", "").trim();
@@ -24,13 +25,9 @@ module.exports = {
 
         let date;
 
-        if (dateM.isValid) {
-            date = dateM;
-        } else if (dateMY.isValid) {
-            date = dateMY;
-        } else {
-            return message.reply("You have to provide a date for the release!\nExample: \`November 22nd, 2022\`");
-        }
+        if (dateM.isValid) date = dateM;
+        else if (dateMY.isValid) date = dateMY;
+        else return message.reply("You have to provide a date for the release!\nExample: \`November 22nd, 2022\`");
 
         await releases.create({
             type: type,

@@ -16,16 +16,11 @@ module.exports = {
 
         let embed = {
             color: 0xff0000,
-            title: `Releases for ${band}`,
+            title: "",
             description: "",
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: "" }
-            // footer: {
-            //     text: `Data by openweathermap.org, updated at `
-            // }
         };
         const whereClause = {
             [Sequelize.Op.or]: [
@@ -34,17 +29,15 @@ module.exports = {
                 )
             ]
         };
-        await releases.findAll({
-            where: whereClause
-        })
+        await releases.findAll({ where: whereClause })
             .then(data => {
                 data.forEach((release, index) => {
                     release = release.dataValues;
 
                     let date = luxon.DateTime.fromFormat(release.date, "d/L/yyyy");
-
                     embed.description += `${index + 1}. ${release.type.capitalize()} | ${release.title} | ${date.toFormat("ccc, LLL dd, yyyy")}\n`;
                 });
+                embed.title += `Releases for ${data[0].dataValues.band}`;
                 embed.thumbnail.url += data[0].dataValues.artwork || pngs.oracle.avatar;
             })
             .catch(Log.error);

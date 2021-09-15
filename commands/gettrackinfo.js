@@ -15,8 +15,6 @@ module.exports = {
         const cmd = message.content.split(" ")[0];
         const data = message.content.replace(cmd, "").trim();
 
-        const now = luxon.DateTime.now();
-
         const type = "track";
         const band = data.split("-")[0].trim();
         const title = data.split("-")[1].trim();
@@ -24,10 +22,8 @@ module.exports = {
         let embed = {
             color: 0xff0000,
             description: "",
-            title: `${type.toUpperCase()}: ${band} - ${title}`,
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            title: "",
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: "" }
         };
@@ -44,18 +40,15 @@ module.exports = {
             ]
         };
 
-        await releases.findAll({
-            where: whereClause,
-        })
+        await releases.findAll({ where: whereClause, })
             .then(data => {
-                if (!data.length) {
-                    embed.description += `No releases found!`;
-                } else {
+                if (!data.length) embed.description += `No releases found!`;
+                else {
                     data.forEach((release, index) => {
                         release = release.dataValues;
 
                         let date = luxon.DateTime.fromFormat(release.date, "d/L/yyyy");
-
+                        embed.title += `${release.type.toUpperCase()}: ${release.band} - ${release.title}`;
                         embed.description += `**Release Date:** ${date.toFormat("cccc, LLLL dd, yyyy")}\n`;
                         embed.thumbnail.url += release.artwork || pngs.oracle.avatar;
                     });

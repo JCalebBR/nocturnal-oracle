@@ -33,9 +33,7 @@ module.exports = {
             ]
         };
 
-        await releases.update({
-            artwork: artwork
-        }, { where: whereClause })
+        await releases.update({ artwork: artwork }, { where: whereClause })
             .then((data) => {
                 message.reply(`Artwork registered!\nArtwork: \`${data.artwork || artwork}\``);
             })

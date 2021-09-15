@@ -17,38 +17,25 @@ module.exports = {
             color: 0xff0000,
             description: "",
             title: "",
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: pngs.oracle.avatar }
         };
+
         let year = now.year;
-        if (!args.length) {
-            embed.title += `Releases for this year!`;
-        } else {
+        if (!args.length) embed.title += `Releases for this year!`;
+        else {
             args = args.join();
             if (parseInt(args)) {
                 year = luxon.DateTime.fromFormat(args, "yyyy").year;
                 embed.title += `Releases for ${luxon.DateTime.fromFormat(args, "yyyy").toFormat("yyyy")}`;
-            } else {
-                return message.reply("That isn't a valid year!");
-            }
-
+            } else return message.reply("That isn't a valid year!");
         }
-        await releases.findAll({
-            where: {
-                year: year
-            },
-            order: [
-                ["type", "ASC"],
-                ["band", "ASC"]
-            ]
-        })
+
+        await releases.findAll({ where: { year: year }, order: [["type", "ASC"], ["band", "ASC"]] })
             .then(data => {
-                if (!data.length) {
-                    embed.description += `No releases found!`;
-                } else {
+                if (!data.length) embed.description += `No releases found!`;
+                else {
                     data.forEach((release, index) => {
                         release = release.dataValues;
 

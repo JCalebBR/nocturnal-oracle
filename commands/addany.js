@@ -29,32 +29,27 @@ module.exports = {
 
         let date;
 
-        if (dateM.isValid) {
-            date = dateM;
-        } else if (dateMY.isValid) {
-            date = dateMY;
-        } else {
-            return message.reply("You have to provide a date for the release!\nExample: \`November 22nd, 2022\`");
-        }
+        if (dateM.isValid) date = dateM;
+        else if (dateMY.isValid) date = dateMY;
+        else return message.reply("You have to provide a date for the release!\nExample: \`November 22nd, 2022\`");
 
         const artwork = message.attachments.first() ? message.attachments.first().url : null;
         message.reply(`Release data registered!\nThis is what I got from you: \`${type}\` \`${band}\` \`${title}\` \`${date}\` \`${artwork || artwork}\`\n\`${tracklist || tracklist}\``);
 
-        // await releases.create({
-        //     type: type,
-        //     title: title,
-        //     tracklist: tracklist,
-        //     band: band,
-        //     date: `${date.toObject().day}/${date.toObject().month}/${date.toObject().year}`,
-        //     week: date.weekNumber,
-        //     month: date.toObject().month,
-        //     year: date.toObject().year,
-        //     artwork: artwork
-        // })
-        //     .then(data => {
-        //         message.reply(`Release data registered!\nThis is what I got from you: \`${data.type}\` \`${data.band}\` \`${data.title}\` \`${data.date}\` \`${data.artwork || artwork}\`\n\`${data.tracklist || tracklist}\``);
-        //     })
-        //     .catch(Log.error);
-
+        await releases.create({
+            type: type,
+            title: title,
+            tracklist: tracklist,
+            band: band,
+            date: `${date.toObject().day}/${date.toObject().month}/${date.toObject().year}`,
+            week: date.weekNumber,
+            month: date.toObject().month,
+            year: date.toObject().year,
+            artwork: artwork
+        })
+            .then(data => {
+                message.reply(`Release data registered!\nThis is what I got from you: \`${data.type}\` \`${data.band}\` \`${data.title}\` \`${data.date}\` \`${data.artwork || artwork}\`\n\`${data.tracklist || tracklist}\``);
+            })
+            .catch(Log.error);
     }
 };

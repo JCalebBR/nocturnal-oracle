@@ -17,9 +17,7 @@ module.exports = {
             color: 0xff0000,
             description: "",
             title: "",
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: pngs.oracle.avatar }
         };
@@ -35,22 +33,14 @@ module.exports = {
                 month = luxon.DateTime.fromFormat(args, "LLLL").month;
                 embed.title += `Releases for ${luxon.DateTime.fromFormat(args, "LLLL").toFormat("LLLL")}`;
             }
-
         }
         await releases.findAll({
-            where: {
-                month: month,
-                year: now.toObject().year
-            },
-            order: [
-                ["type", "ASC"],
-                ["band", "ASC"]
-            ]
+            where: { month: month, year: now.toObject().year },
+            order: [["type", "ASC"], ["band", "ASC"]]
         })
             .then(data => {
-                if (!data.length) {
-                    embed.description += `No releases found!`;
-                } else {
+                if (!data.length) embed.description += `No releases found!`;
+                else {
                     data.forEach((release, index) => {
                         release = release.dataValues;
 

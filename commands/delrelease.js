@@ -16,7 +16,7 @@ module.exports = {
         const type = data.split("-")[2].trim();
         const band = data.split("-")[0].trim();
         const title = data.split("-")[1].trim();
-        console.log(type, band, title);
+
         const whereClause = {
             [Sequelize.Op.and]: [
                 Sequelize.where(
@@ -28,14 +28,13 @@ module.exports = {
                 )
             ]
         };
-        const entries = await releases.findAll({
-            where: whereClause
-        });
-
-        entries.forEach(async release => {
-            await release.destroy()
-                .then(message.reply("Release successfully deleted!"))
-                .catch(Log.error);
-        });
+        await releases.findAll({ where: whereClause })
+            .then(entries => {
+                entries.forEach(async release => {
+                    await release.destroy()
+                        .then(message.reply("Release(s) successfully deleted!"))
+                        .catch(Log.error);
+                });
+            });
     }
 };

@@ -17,38 +17,22 @@ module.exports = {
             color: 0xff0000,
             description: "",
             title: "",
-            author: {
-                icon_url: pngs.oracle.avatar
-            },
+            author: { icon_url: pngs.oracle.avatar },
             fields: [],
             thumbnail: { url: pngs.oracle.avatar }
-            // footer: {
-            //     text: `Data by openweathermap.org, updated at `
-            // }
         };
+
         let week = now.weekNumber;
-        if (!args.length) {
-            embed.title += `Releases for this week!`;
-        } else if (args.join() === "next") {
+        if (!args.length) embed.title += `Releases for this week!`;
+        else if (args.join() === "next") {
             embed.title += `Releases for next week!`;
             week += 1;
-        } else {
-            return message.reply("Invalid arguments!");
-        }
-        await releases.findAll({
-            where: {
-                week: week,
-                year: now.toObject().year
-            },
-            order: [
-                ["type", "ASC"],
-                ["band", "ASC"]
-            ]
-        })
+        } else return message.reply("Invalid arguments!");
+
+        await releases.findAll({ where: { week: week, year: now.toObject().year }, order: [["type", "ASC"], ["band", "ASC"]] })
             .then(data => {
-                if (!data.length) {
-                    embed.description += `No releases found!`;
-                } else {
+                if (!data.length) embed.description += `No releases found!`;
+                else {
                     data.forEach((release, index) => {
                         release = release.dataValues;
 

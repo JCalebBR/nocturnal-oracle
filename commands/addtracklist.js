@@ -16,8 +16,6 @@ module.exports = {
         const cmd = message.content.split(" ")[0];
         const data = message.content.replace(cmd, "").trim();
 
-        const now = luxon.DateTime.now();
-
         const type = data.split("-")[2].trim();
         const band = data.split("-")[0].trim();
         const title = data.split("-")[1].trim();
@@ -39,9 +37,7 @@ module.exports = {
             await message.channel.awaitMessages({ filter, time: 60000, max: 1, errors: ["time"] })
                 .then(async messages => {
                     const tracklist = messages.first().content.replace("Tracklist:", "").trim();
-                    await releases.update({
-                        tracklist: tracklist
-                    }, { where: whereClause })
+                    await releases.update({ tracklist: tracklist }, { where: whereClause })
                         .then((data) => {
                             message.reply(`Tracklist updated!\nTracklist:\n\`\`\`${data.tracklist || tracklist}\`\`\``);
                         })
