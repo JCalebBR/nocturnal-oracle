@@ -34,7 +34,6 @@ module.exports = {
         else return message.reply("You have to provide a date for the release!\nExample: \`November 22nd, 2022\`");
 
         const artwork = message.attachments.first() ? message.attachments.first().url : null;
-        message.reply(`Release data registered!\nThis is what I got from you: \`${type}\` \`${band}\` \`${title}\` \`${date}\` \`${artwork || artwork}\`\n\`${tracklist || tracklist}\``);
 
         await releases.create({
             type: type,
