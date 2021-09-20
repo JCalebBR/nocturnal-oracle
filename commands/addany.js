@@ -6,7 +6,7 @@ module.exports = {
     args: true,
     guildOnly: true,
     description: "Adds a track/single",
-    usage: "<band name> - <track title> (new <album | track | EP>), <release date>",
+    usage: "<band name> - <release title> (new <album | track | EP>), <release date>",
     admin: true,
     tag: "Releases",
     async execute(message, args, releases, Log) {

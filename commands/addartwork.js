@@ -1,5 +1,3 @@
-const { pngs } = require("../config.json");
-const luxon = require("luxon");
 const Sequelize = require("sequelize");
 
 module.exports = {
