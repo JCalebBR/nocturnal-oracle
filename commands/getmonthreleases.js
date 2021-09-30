@@ -22,20 +22,24 @@ module.exports = {
             thumbnail: { url: pngs.oracle.avatar }
         };
         let month = now.month;
+        let year = now.year;
         if (!args.length) {
             embed.title += `Releases for this month!`;
         } else {
-            args = args.join();
-            if (parseInt(args)) {
-                month = luxon.DateTime.fromFormat(args, "L").month;
-                embed.title += `Releases for ${luxon.DateTime.fromFormat(args, "L").toFormat("LLLL")}`;
-            } else {
-                month = luxon.DateTime.fromFormat(args, "LLLL").month;
-                embed.title += `Releases for ${luxon.DateTime.fromFormat(args, "LLLL").toFormat("LLLL")}`;
+            const monthDate = luxon.DateTime.fromFormat(`${args[0]}`, "LLLL");
+            const monthYearDate = luxon.DateTime.fromFormat(`${args[0].replaceAll(",", "")}, ${args[1]}`, "LLLL, yyyy");
+
+            if (monthDate.isValid) {
+                month = monthDate.month;
+                embed.title += `Releases for ${monthDate.toFormat("LLLL")}`;
+            } else if (monthYearDate.isValid) {
+                month = monthYearDate.month;
+                year = monthYearDate.year;
+                embed.title += `Releases for ${monthYearDate.toFormat("LLLL, yyyy")}`;
             }
         }
         await releases.findAll({
-            where: { month: month, year: now.toObject().year },
+            where: { month: month, year: year },
             order: [["type", "ASC"], ["band", "ASC"]]
         })
             .then(data => {
