@@ -1,3 +1,5 @@
+const Logging = require("./util/log.js");
+
 const fs = require("fs");
 
 const Discord = require("discord.js");
@@ -17,7 +19,7 @@ botIntents.add(
 
 const client = new Discord.Client({ intents: botIntents });
 const path = require("path");
-const Logging = require("./util/log");
+
 const commandsDirPath = path.resolve(__dirname, "./commands");
 
 const Log = new Logging();
@@ -117,6 +119,7 @@ client.on("messageCreate", async message => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
+        message.channel.sendTyping();
         await command.execute(message, args, releases, Log);
     } catch (error) {
         Log.error(`${message.author} tried to use ${command}, which resulted in an error | ${error}`);
