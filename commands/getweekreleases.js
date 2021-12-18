@@ -27,6 +27,10 @@ module.exports = {
         else if (args.join() === "next") {
             embed.title += `Releases for next week!`;
             week += 1;
+        }
+        else if (args.join() === "after") {
+            embed.title += `Releases for next week!`;
+            week += 2;
         } else return message.reply("Invalid arguments!");
 
         await releases.findAll({ where: { week: week, year: now.toObject().year }, order: [["type", "ASC"], ["band", "ASC"]] })
